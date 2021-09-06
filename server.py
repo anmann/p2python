@@ -31,8 +31,6 @@ def start(client, input, dict):
 
         if (data.strip() == '\help'):
             usage(client)
-        if (data.strp() == '\GET_CLIENTS'):
-            client.send('\CLIENT_LIST: ' + str(dict.keys()))
         if (data.strip() == '\DISCONNECT'):
             client.close()
             input.remove(client)
@@ -46,18 +44,8 @@ def usage(client):
     msg = '''
 Command List:
 
-\GET_CLIENTS      - request list of connected clients
-
 \DISCONNECT    - disconnect from service '''
     client.send(msg)
-
-def info(client, client_info):
-    client.send('username: ')
-    user = client.recv(DATA_SIZE)
-    if (client_info.has_key(user)):
-        client.send(client_info[user])
-    else:
-        client.send('User ' + user + ' does not exist')
 
 if __name__ == '__main__':
     main()
