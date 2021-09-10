@@ -30,8 +30,9 @@ def listen(user_input):
     socket.listen(BACKLOG)
 
     while True:
-        inready,outready,exceptready = select.select()
-        for s in inready:
+        socket_list = [sys.stdin, sock]
+        read_sockets,write_sockets,error_sockets = select.select(socket_list, [], [])
+        for s in read_sockets:
             try:
                 if s == sock:
                     client, address = sock.accept()
@@ -48,6 +49,7 @@ def listen(user_input):
             except:
                 client.close()
                 input.remove(client)
+
 def connect(data):
     client_port = int(data)
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -69,7 +71,7 @@ def connect(data):
 def main():
     try:
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client.setsockopt(socket.SQL_SOCKET, socket.SO_REUSEADDR, 1)
+        client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
         client.connect((HOST,PORT))
 

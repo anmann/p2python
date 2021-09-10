@@ -3,7 +3,7 @@ import socket
 import os
 import sys
 import select
-import thread
+import _thread
 
 HOST = '127.0.0.1'
 PORT = 8888
